@@ -1,0 +1,44 @@
+This is a mirror of http://www.vim.org/scripts/script.php?script_id=2207
+
+               Project with a tags file example:
+
+               Open a long full path name from some error log
+
+                vi /some/full/path/to/project/current_project/lib/module/file.ext
+               ...
+
+               :Relativize tags<cr>
+
+               if you type :pwd you should get
+
+               /some/full/path/to/project/current_project
+
+               assuming a tags file has been created in the current_project
+               file in the past.
+
+               So hopefully this means tag jumps will work and relative
+               include paths can be accessed via gf.
+
+               This could also be useful for other landmark files on the
+               system (eg. index.html, tags, .project,build.xml,README...etc). 
+               In the above example
+               using the actual file.ext as the argument will make the
+               working directory the module directory
+
+               The function will prioritise the deepest tags file.
+
+                I have this in my vimrc to give you some ideas
+                
+                nnoremap ,pp :split<cr>:enew<cr>:r! tail -n 1000 /var/log/php_errorlog<cr>:set buftype=nofile<cr>Gf/
+                nnoremap gft gf:Relativize tags<cr>
+                nnoremap gfi gf:Relativize index.php<cr>
+
+
+
+
+         Bugs:
+
+               - Will probably not work with MS windows paths in current form.
+               It will probably cause an infinite loop you will need to
+               Ctrl-C out of.
+   
